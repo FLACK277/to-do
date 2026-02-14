@@ -533,6 +533,11 @@ body,
   pointer-events: none;
 }
 
+[data-theme='dark'] .character-speech {
+  background: rgba(30, 41, 59, 0.92);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
 .music-indicator {
   display: flex;
   gap: 2px;
