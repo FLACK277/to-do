@@ -33,6 +33,12 @@ export default function TaskCard({ task, onEdit }) {
 
   const handleDragEnd = () => setDragging(false);
 
+  // Prevent drag from starting when clicking action buttons
+  const stopDrag = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+  };
+
   const statusClass =
     task.status === 'done' ? 'completed' :
     task.status === 'doing' ? 'doing' : '';
@@ -45,7 +51,7 @@ export default function TaskCard({ task, onEdit }) {
       onDragEnd={handleDragEnd}
     >
       <div className="task-text">{task.text}</div>
-      <div className="task-actions">
+      <div className="task-actions" onMouseDown={stopDrag} draggable={false}>
         <button
           className="task-btn check"
           onClick={() => toggleComplete(task.id)}
