@@ -71,14 +71,9 @@ export default function TaskCard({ task, onEdit }) {
       {showCelebration && (
         <div className="task-celebration">
           <div className="confetti-container">
-            <div className="confetti-particle"></div>
-            <div className="confetti-particle"></div>
-            <div className="confetti-particle"></div>
-            <div className="confetti-particle"></div>
-            <div className="confetti-particle"></div>
-            <div className="confetti-particle"></div>
-            <div className="confetti-particle"></div>
-            <div className="confetti-particle"></div>
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="confetti-particle"></div>
+            ))}
           </div>
           <div className="task-celebration-message">
             Nice work! Task completed 🎉

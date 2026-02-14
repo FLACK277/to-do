@@ -29,9 +29,10 @@ function App() {
     const [speech, setSpeech] = useState(null);
 
     // Initialize audio volume from persisted state
+    // This is intentional one-time initialization on mount, not a synchronization effect
     useEffect(() => {
         audio.setVolume(volume);
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     // Character speech bubbles on reactions
     useEffect(() => {
