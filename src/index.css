@@ -190,6 +190,16 @@ body,
   background: rgba(255, 255, 255, 0.95);
 }
 
+[data-theme='dark'] .search-bar input {
+  background: rgba(30, 41, 59, 0.75);
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+[data-theme='dark'] .search-bar input:focus {
+  border-color: var(--color-primary);
+  background: rgba(30, 41, 59, 0.95);
+}
+
 .search-bar .search-icon {
   position: absolute;
   left: 10px;
@@ -424,6 +434,16 @@ body,
   opacity: 0.6;
 }
 
+[data-theme='dark'] .input-container input {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+[data-theme='dark'] .input-container input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 20px rgba(129, 199, 132, 0.3);
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -476,6 +496,15 @@ body,
 }
 
 .modal textarea:focus {
+  border-color: var(--color-primary);
+}
+
+[data-theme='dark'] .modal textarea {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+[data-theme='dark'] .modal textarea:focus {
   border-color: var(--color-primary);
 }
 
@@ -659,6 +688,11 @@ body,
   overflow: hidden;
 }
 
+[data-theme='dark'] .cozy-assistant {
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 0.98) 100%);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
 .cozy-assistant-header {
   display: flex;
   align-items: center;
@@ -666,6 +700,10 @@ body,
   padding: 16px 20px;
   background: linear-gradient(135deg, var(--color-primary) 0%, #66BB6A 100%);
   color: white;
+}
+
+[data-theme='dark'] .cozy-assistant-header {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
 }
 
 .cozy-assistant-title {
@@ -721,6 +759,10 @@ body,
   max-height: 400px;
 }
 
+[data-theme='dark'] .cozy-assistant-messages {
+  background: rgba(15, 23, 42, 0.5);
+}
+
 .cozy-message {
   display: flex;
   gap: 10px;
@@ -751,6 +793,11 @@ body,
   border-bottom-left-radius: 4px;
 }
 
+[data-theme='dark'] .cozy-message.assistant .cozy-message-text {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--color-text);
+}
+
 .cozy-message.user .cozy-message-text {
   background: var(--color-primary);
   color: white;
@@ -763,6 +810,11 @@ body,
   padding: 16px;
   background: rgba(255, 255, 255, 0.5);
   border-top: 1px solid rgba(78, 52, 46, 0.1);
+}
+
+[data-theme='dark'] .cozy-assistant-input {
+  background: rgba(30, 41, 59, 0.5);
+  border-top-color: rgba(148, 163, 184, 0.2);
 }
 
 .cozy-assistant-input input {
@@ -781,6 +833,16 @@ body,
 .cozy-assistant-input input:focus {
   border-color: var(--color-primary);
   background: white;
+}
+
+[data-theme='dark'] .cozy-assistant-input input {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+[data-theme='dark'] .cozy-assistant-input input:focus {
+  border-color: var(--color-primary);
+  background: rgba(30, 41, 59, 1);
 }
 
 .cozy-assistant-input input::placeholder {
