@@ -11,6 +11,7 @@ class AudioEngine {
     this.isPlaying = false;
     this.initialized = false;
     this.musicInterval = null;
+    this.isDark = false;
   }
 
   init() {
@@ -18,15 +19,15 @@ class AudioEngine {
     this.ctx = new (window.AudioContext || window.webkitAudioContext)();
 
     this.masterGain = this.ctx.createGain();
-    this.masterGain.gain.value = 0.5;
+    this.masterGain.gain.value = 0.8;
     this.masterGain.connect(this.ctx.destination);
 
     this.musicGain = this.ctx.createGain();
-    this.musicGain.gain.value = 0.25;
+    this.musicGain.gain.value = 0.4;
     this.musicGain.connect(this.masterGain);
 
     this.sfxGain = this.ctx.createGain();
-    this.sfxGain.gain.value = 0.6;
+    this.sfxGain.gain.value = 0.8;
     this.sfxGain.connect(this.masterGain);
 
     // Reverb for warmth
@@ -91,13 +92,19 @@ class AudioEngine {
     if (!this.initialized) this.init();
     if (this.isPlaying) return;
     this.isPlaying = true;
-    this.musicGain.gain.value = 0.25;
+    this.musicGain.gain.value = 0.4;
 
-    const scale = [261.63,293.66,329.63,392.00,440.00,523.25,587.33,659.25,783.99,880.00];
-    const progressions = [[0,2,4],[3,5,7],[1,3,5],[4,6,8],[0,2,4],[2,4,6],[1,4,6],[0,3,5]];
+    const scale = this.isDark
+      ? [207.65, 233.08, 246.94, 311.13, 349.23, 415.30, 466.16, 493.88, 622.25, 698.46] // G# Minor Pentatonic
+      : [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99, 880.00]; // C Major/A Minor Pentatonic
+
+    const progressions = this.isDark
+      ? [[0, 2, 4], [3, 1, 0], [4, 6, 8], [2, 4, 1]]
+      : [[0, 2, 4], [3, 5, 7], [1, 3, 5], [4, 6, 8], [0, 2, 4], [2, 4, 6], [1, 4, 6], [0, 3, 5]];
+
     const melodies = [
-      [4,-1,5,4,3,-1,2,0],[2,3,4,-1,5,4,3,2],[0,-1,2,4,5,-1,4,3],[5,4,3,2,-1,0,2,3],
-      [4,5,7,5,4,-1,3,2],[0,2,3,4,-1,5,4,2],[3,-1,4,5,4,3,2,0],[2,4,5,-1,4,3,2,0],
+      [4, -1, 5, 4, 3, -1, 2, 0], [2, 3, 4, -1, 5, 4, 3, 2], [0, -1, 2, 4, 5, -1, 4, 3], [5, 4, 3, 2, -1, 0, 2, 3],
+      [4, 5, 7, 5, 4, -1, 3, 2], [0, 2, 3, 4, -1, 5, 4, 2], [3, -1, 4, 5, 4, 3, 2, 0], [2, 4, 5, -1, 4, 3, 2, 0],
     ];
 
     let barIndex = 0;
@@ -145,6 +152,14 @@ class AudioEngine {
   toggleMusic() {
     if (this.isPlaying) this.stopMusic(); else this.startMusic();
     return this.isPlaying;
+  }
+
+  setDark(isDark) {
+    this.isDark = isDark;
+    if (this.isPlaying) {
+      this.stopMusic();
+      setTimeout(() => this.startMusic(), 600);
+    }
   }
 
   playChime(time, freq, velocity) {

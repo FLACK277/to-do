@@ -23,6 +23,7 @@ function App() {
     const [editingTask, setEditingTask] = useState(null);
     const [assistantOpen, setAssistantOpen] = useState(false);
     const characterReaction = useStore((s) => s.characterReaction);
+    const darkMode = useStore((s) => s.darkMode);
     const [speech, setSpeech] = useState(null);
 
     // Character speech bubbles on reactions
@@ -38,6 +39,11 @@ function App() {
         const timer = setTimeout(() => setSpeech(null), 2500);
         return () => clearTimeout(timer);
     }, [characterReaction]);
+
+    // Apply dark mode theme to document element
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+    }, [darkMode]);
 
     return (
         <>

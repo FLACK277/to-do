@@ -11,6 +11,7 @@ const useStore = create(
       filter: 'all',
       searchQuery: '',
       musicOn: false,
+      darkMode: false,
       characterReaction: null,
 
       addTask: (text, options = {}) => {
@@ -68,6 +69,11 @@ const useStore = create(
       setFilter: (f) => set({ filter: f }),
       setSearchQuery: (q) => set({ searchQuery: q }),
       setMusicOn: (on) => set({ musicOn: on }),
+      toggleDarkMode: () => {
+        const newMode = !get().darkMode;
+        set({ darkMode: newMode });
+        audio.setDark(newMode);
+      },
 
       getFilteredTasks: () => {
         const { tasks, filter, searchQuery } = get();
@@ -94,7 +100,7 @@ const useStore = create(
 
       getAllTasks: () => get().tasks,
     }),
-    { name: 'ghibli-todo-storage', partialize: (state) => ({ tasks: state.tasks }) }
+    { name: 'ghibli-todo-storage', partialize: (state) => ({ tasks: state.tasks, darkMode: state.darkMode }) }
   )
 );
 
