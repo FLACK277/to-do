@@ -2,6 +2,7 @@ import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Sparkles } from '@react-three/drei';
 import * as THREE from 'three';
+import useStore from '../store/useStore';
 
 /* ─── Floating Island ─── */
 export function FloatingIsland() {
