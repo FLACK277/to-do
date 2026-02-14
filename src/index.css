@@ -267,7 +267,7 @@ body,
 }
 
 .column-doing .column-header {
-  color: #1976d2;
+  color: var(--color-doing);
 }
 
 .column-done .column-header {
