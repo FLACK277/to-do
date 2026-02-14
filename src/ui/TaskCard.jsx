@@ -1,13 +1,27 @@
 /**
  * TaskCard — Individual draggable task card with actions
  */
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import useStore from '../store/useStore';
 
 export default function TaskCard({ task, onEdit }) {
   const toggleComplete = useStore((s) => s.toggleComplete);
   const deleteTask = useStore((s) => s.deleteTask);
   const [dragging, setDragging] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const prevStatusRef = useRef(task.status);
+
+  useEffect(() => {
+    // Show celebration when task is marked as complete
+    if (prevStatusRef.current !== 'done' && task.status === 'done') {
+      setShowCelebration(true);
+      const timer = setTimeout(() => {
+        setShowCelebration(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+    prevStatusRef.current = task.status;
+  }, [task.status]);
 
   const handleDragStart = (e) => {
     e.dataTransfer.setData('text/plain', task.id);
@@ -54,6 +68,18 @@ export default function TaskCard({ task, onEdit }) {
           🗑️
         </button>
       </div>
+      {showCelebration && (
+        <div className="task-celebration">
+          <div className="confetti-container">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="confetti-particle"></div>
+            ))}
+          </div>
+          <div className="task-celebration-message">
+            Nice work! Task completed 🎉
+          </div>
+        </div>
+      )}
     </div>
   );
 }

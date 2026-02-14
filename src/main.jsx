@@ -4,6 +4,7 @@ import './index.css';
 
 // Store
 import useStore from './store/useStore';
+import audio from './audio/AudioEngine';
 
 // Scene components
 import SceneCanvas from './scene/SceneCanvas';
@@ -24,7 +25,14 @@ function App() {
     const [assistantOpen, setAssistantOpen] = useState(false);
     const characterReaction = useStore((s) => s.characterReaction);
     const darkMode = useStore((s) => s.darkMode);
+    const volume = useStore((s) => s.volume);
     const [speech, setSpeech] = useState(null);
+
+    // Initialize audio volume from persisted state
+    // This is intentional one-time initialization on mount, not a synchronization effect
+    useEffect(() => {
+        audio.setVolume(volume);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     // Character speech bubbles on reactions
     useEffect(() => {

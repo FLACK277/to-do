@@ -23,7 +23,7 @@ class AudioEngine {
     this.masterGain.connect(this.ctx.destination);
 
     this.musicGain = this.ctx.createGain();
-    this.musicGain.gain.value = 0.4;
+    this.musicGain.gain.value = 0.6;
     this.musicGain.connect(this.masterGain);
 
     this.sfxGain = this.ctx.createGain();
@@ -87,12 +87,26 @@ class AudioEngine {
     mod.stop(t + duration + 0.1);
   }
 
+  /** Set master volume (0 to 1) */
+  setVolume(value) {
+    if (!this.initialized) this.init();
+    const clampedValue = Math.max(0, Math.min(1, value));
+    this.masterGain.gain.value = clampedValue;
+  }
+
   /** Pentatonic melody loop */
   startMusic() {
     if (!this.initialized) this.init();
     if (this.isPlaying) return;
     this.isPlaying = true;
-    this.musicGain.gain.value = 0.4;
+    this.musicGain.gain.value = 0.6;
+
+    // Enhanced dark mode: increase reverb
+    if (this.isDark) {
+      this.reverbGain.gain.value = 0.25;
+    } else {
+      this.reverbGain.gain.value = 0.15;
+    }
 
     const scale = this.isDark
       ? [207.65, 233.08, 246.94, 311.13, 349.23, 415.30, 466.16, 493.88, 622.25, 698.46] // G# Minor Pentatonic
@@ -108,7 +122,8 @@ class AudioEngine {
     ];
 
     let barIndex = 0;
-    const bpm = 72;
+    // Lower BPM for dark mode
+    const bpm = this.isDark ? 60 : 72;
     const beatDuration = 60 / bpm;
     const barDuration = beatDuration * 4;
 
@@ -127,7 +142,10 @@ class AudioEngine {
         const freq = scale[Math.min(noteIdx, scale.length - 1)];
         const time = now + i * (barDuration / melody.length);
         const dur = (barDuration / melody.length) * 0.8;
-        this.playNote(freq, time, dur, 0.15 + Math.random() * 0.08, (i / melody.length - 0.5) * 0.4);
+        // Reduce velocity in dark mode for softer feel
+        const baseVelocity = this.isDark ? 0.12 : 0.15;
+        const randomVariation = this.isDark ? 0.05 : 0.08;
+        this.playNote(freq, time, dur, baseVelocity + Math.random() * randomVariation, (i / melody.length - 0.5) * 0.4);
       });
 
       if (Math.random() > 0.6) {

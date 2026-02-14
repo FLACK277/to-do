@@ -174,8 +174,31 @@ export function PastelSky() {
 }
 
 function Stars() {
+  const starsRef = useRef();
+  
+  useFrame((state) => {
+    if (starsRef.current) {
+      // Subtle parallax movement based on camera/time
+      const t = state.clock.elapsedTime;
+      starsRef.current.position.x = Math.sin(t * 0.05) * 2;
+      starsRef.current.position.y = Math.cos(t * 0.03) * 1;
+    }
+  });
+
   return (
-    <Sparkles count={200} size={1} scale={[100, 60, 20]} position={[0, 20, -50]} speed={0.05} color="#ffffff" opacity={1} />
+    <group ref={starsRef}>
+      <Sparkles 
+        count={200} 
+        size={1} 
+        scale={[100, 60, 20]} 
+        position={[0, 20, -50]} 
+        speed={0.05} 
+        color="#ffffff" 
+        opacity={1}
+        // Add noise for twinkling effect
+        noise={1.5}
+      />
+    </group>
   );
 }
 
