@@ -985,14 +985,9 @@ body,
   height: 4px;
   -webkit-appearance: none;
   appearance: none;
-  background: linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) 80%, rgba(0,0,0,0.1) 80%, rgba(0,0,0,0.1) 100%);
   border-radius: 2px;
   outline: none;
   cursor: pointer;
-}
-
-[data-theme='dark'] .volume-slider {
-  background: linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) 80%, rgba(255,255,255,0.2) 80%, rgba(255,255,255,0.2) 100%);
 }
 
 .volume-slider::-webkit-slider-thumb {

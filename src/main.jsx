@@ -4,6 +4,7 @@ import './index.css';
 
 // Store
 import useStore from './store/useStore';
+import audio from './audio/AudioEngine';
 
 // Scene components
 import SceneCanvas from './scene/SceneCanvas';
@@ -24,7 +25,13 @@ function App() {
     const [assistantOpen, setAssistantOpen] = useState(false);
     const characterReaction = useStore((s) => s.characterReaction);
     const darkMode = useStore((s) => s.darkMode);
+    const volume = useStore((s) => s.volume);
     const [speech, setSpeech] = useState(null);
+
+    // Initialize audio volume from persisted state
+    useEffect(() => {
+        audio.setVolume(volume);
+    }, []);
 
     // Character speech bubbles on reactions
     useEffect(() => {

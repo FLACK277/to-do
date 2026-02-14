@@ -12,7 +12,7 @@ const useStore = create(
       searchQuery: '',
       musicOn: false,
       darkMode: false,
-      volume: 0.8,
+      volume: 0.6,
       characterReaction: null,
 
       addTask: (text, options = {}) => {

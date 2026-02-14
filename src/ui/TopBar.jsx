@@ -22,6 +22,8 @@ export default function TopBar() {
     setVolume(value);
   };
 
+  const volumePercentage = Math.round(volume * 100);
+
   return (
     <div className="top-bar">
       <div className="app-title">
@@ -55,7 +57,10 @@ export default function TopBar() {
               step="0.01"
               value={volume}
               onChange={handleVolumeChange}
-              title={`Volume: ${Math.round(volume * 100)}%`}
+              title={`Volume: ${volumePercentage}%`}
+              style={{
+                background: `linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) ${volumePercentage}%, ${darkMode ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)'} ${volumePercentage}%, ${darkMode ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)'} 100%)`
+              }}
             />
           </div>
         )}
